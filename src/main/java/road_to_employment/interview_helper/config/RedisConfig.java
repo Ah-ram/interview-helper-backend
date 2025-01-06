@@ -1,4 +1,4 @@
-package road_to_employment.interview_helper.oauth.config;
+package road_to_employment.interview_helper.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
