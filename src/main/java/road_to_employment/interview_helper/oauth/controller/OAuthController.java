@@ -8,6 +8,8 @@ import road_to_employment.interview_helper.oauth.service.OAuthService;
 import road_to_employment.interview_helper.oauth.service.RedisService;
 import road_to_employment.interview_helper.user.entity.User;
 import road_to_employment.interview_helper.user.service.UserService;
+import road_to_employment.interview_helper.user_profile.entity.UserProfile;
+import road_to_employment.interview_helper.user_profile.service.UserProfileService;
 
 import java.util.Map;
 import java.util.Objects;
@@ -19,6 +21,7 @@ import java.util.Objects;
 public class OAuthController {
     private final OAuthService oAuthService;
     private final UserService userService;
+    private final UserProfileService userProfileService;
     private final RedisService redisService;
 
     @GetMapping("/google")
@@ -62,8 +65,9 @@ public class OAuthController {
         User user = userService.findByProviderId(providerId);
 
         if (user == null) {
-            user = userService.create(name, email, picture, provider, providerId, registerId);
+            user = userService.create(provider, providerId, registerId);
         }
+        UserProfile userProfile = userProfileService.createUserProfile(name, email, picture, user);
 
         String response = redisService.setUserTokenToRedis(user);
         return ResponseEntity.ok(response);

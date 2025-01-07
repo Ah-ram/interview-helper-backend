@@ -13,9 +13,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String email;
-    private String name;
-    private String picture;
+    // UserProfile Domain 으로 분리함
+    // private String email;
+    // private String name;
+    // private String picture;
     private String registerId;
 
     @Enumerated(EnumType.STRING)
