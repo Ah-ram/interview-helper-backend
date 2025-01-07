@@ -18,8 +18,8 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public User findByEmail(String email) {
-        Optional<User> maybeUser = userRepository.findByEmail(email);
+    public User findById(Long id) {
+        Optional<User> maybeUser = userRepository.findById(id);
 
         return maybeUser.orElse(null);
     }
@@ -32,11 +32,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User create(String name, String email, String picture, String provider, String providerId, String registerId) {
+    public User create(String provider, String providerId, String registerId) {
         User user = User.builder()
-                .name(name)
-                .email(email)
-                .picture(picture)
                 .provider(provider)
                 .providerId(providerId)
                 .registerId(registerId)

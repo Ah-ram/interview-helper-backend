@@ -32,7 +32,7 @@ public class RedisServiceImpl implements RedisService {
         String value = redisTemplate.opsForValue().get(key);
 
         if (value == null) {
-            return "해당 userToken과 일치하는 사용자가 없습니다!";
+            throw new RuntimeException("해당 userToken으로 값을 찾을 수 없습니다!");
         }
 
         return value;
