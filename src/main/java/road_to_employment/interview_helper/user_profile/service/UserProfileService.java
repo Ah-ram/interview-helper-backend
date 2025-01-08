@@ -8,4 +8,5 @@ public interface UserProfileService {
     UserProfile createUserProfile(String email, String picture, String nickname, User user);
     UserinfoResponse findByUser(User user);
     boolean isNicknameDuplicated(String nickname);
+    boolean changeUserPicture(User user, String imageUrl);
 }
