@@ -55,4 +55,19 @@ public class UserProfileServiceImpl implements UserProfileService {
 
         return true;
     }
+
+    @Override
+    public boolean changeUserNickname(User user, String nickname) {
+        Optional<UserProfile> maybeUserProfile = userProfileRepository.findByUser(user);
+
+        if (maybeUserProfile.isEmpty()) {
+            return false;
+        }
+
+        UserProfile userProfile = maybeUserProfile.get();
+        userProfile.setNickname(nickname);
+        userProfileRepository.save(userProfile);
+
+        return true;
+    }
 }
