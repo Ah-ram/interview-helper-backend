@@ -2,6 +2,7 @@ package road_to_employment.interview_helper.user_profile.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Service;
 import road_to_employment.interview_helper.user.entity.User;
 import road_to_employment.interview_helper.user_profile.entity.UserProfile;
@@ -13,12 +14,13 @@ import java.util.Optional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@EnableJpaRepositories("road_to_employment.interview_helper.user_profile")
 public class UserProfileServiceImpl implements UserProfileService {
     private final UserProfileRepository userProfileRepository;
 
     @Override
-    public UserProfile createUserProfile(String name, String email, String picture, User user) {
-        UserProfile userProfile = new UserProfile(name, email, picture, user);
+    public UserProfile createUserProfile(String email, String picture, String nickname, User user) {
+        UserProfile userProfile = new UserProfile(email, picture, nickname, user);
         return userProfileRepository.save(userProfile);
     }
 
