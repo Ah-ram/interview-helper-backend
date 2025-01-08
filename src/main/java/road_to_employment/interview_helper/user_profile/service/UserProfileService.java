@@ -9,4 +9,5 @@ public interface UserProfileService {
     UserinfoResponse findByUser(User user);
     boolean isNicknameDuplicated(String nickname);
     boolean changeUserPicture(User user, String imageUrl);
+    boolean changeUserNickname(User user, String nickname);
 }
