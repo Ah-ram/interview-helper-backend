@@ -33,4 +33,11 @@ public class UserProfileServiceImpl implements UserProfileService {
 
         return UserinfoResponse.from(userProfile);
     }
+
+    @Override
+    public boolean isNicknameDuplicated(String nickname) {
+        Optional<UserProfile> maybeUserProfile = userProfileRepository.findByNickname(nickname);
+
+        return maybeUserProfile.isPresent();
+    }
 }

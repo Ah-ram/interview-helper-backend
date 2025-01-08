@@ -7,4 +7,5 @@ import road_to_employment.interview_helper.user_profile.service.response.Userinf
 public interface UserProfileService {
     UserProfile createUserProfile(String email, String picture, String nickname, User user);
     UserinfoResponse findByUser(User user);
+    boolean isNicknameDuplicated(String nickname);
 }
