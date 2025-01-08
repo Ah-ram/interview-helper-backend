@@ -40,4 +40,19 @@ public class UserProfileServiceImpl implements UserProfileService {
 
         return maybeUserProfile.isPresent();
     }
+
+    @Override
+    public boolean changeUserPicture(User user, String imageUrl) {
+        Optional<UserProfile> maybeUserProfile = userProfileRepository.findByUser(user);
+
+        if (maybeUserProfile.isEmpty()) {
+            return false;
+        }
+
+        UserProfile userProfile = maybeUserProfile.get();
+        userProfile.setPicture(imageUrl);
+        userProfileRepository.save(userProfile);
+
+        return true;
+    }
 }

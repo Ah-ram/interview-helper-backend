@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import road_to_employment.interview_helper.oauth.service.RedisService;
 import road_to_employment.interview_helper.user.entity.User;
 import road_to_employment.interview_helper.user.service.UserService;
+import road_to_employment.interview_helper.user_profile.controller.request_form.ChangeUserPictureRequestForm;
 import road_to_employment.interview_helper.user_profile.controller.request_form.CheckNicknameDuplicateRequestForm;
 import road_to_employment.interview_helper.user_profile.controller.request_form.UserinfoRequestForm;
 import road_to_employment.interview_helper.user_profile.controller.response_form.UserinfoResponseForm;
@@ -42,6 +43,19 @@ public class UserProfileController {
         String nickname = checkNicknameDuplicateRequestForm.getNickname();
 
         boolean response = userProfileService.isNicknameDuplicated(nickname);
+
+        return response;
+    }
+
+    @PostMapping("/change-picture")
+    public boolean changeUserPicture(@RequestBody ChangeUserPictureRequestForm changeUserPictureRequestForm) {
+        String userToken = changeUserPictureRequestForm.getUserToken();
+        String imageUrl = changeUserPictureRequestForm.getImageUrl();
+        String value = redisService.getValueByKey(userToken);
+        Long userId = Long.valueOf(value);
+        User user = userService.findById(userId);
+
+        boolean response = userProfileService.changeUserPicture(user, imageUrl);
 
         return response;
     }
