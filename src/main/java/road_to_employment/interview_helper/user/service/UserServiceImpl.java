@@ -32,11 +32,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User create(String provider, String providerId, String registerId) {
+    public User create(String name, String provider, String providerId) {
         User user = User.builder()
+                .name(name)
                 .provider(provider)
                 .providerId(providerId)
-                .registerId(registerId)
                 .role(Role.USER).build();
         return userRepository.save(user);
     }

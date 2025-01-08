@@ -60,14 +60,14 @@ public class OAuthController {
         String email = body.get("email");
         String picture = body.get("picture");
         String provider = "google";
-        String registerId = provider + '_' + providerId;
+        String nickname = provider + '_' + providerId;
         log.info("controller -> saveUserTokenToRedis() providerId: {}", providerId);
         User user = userService.findByProviderId(providerId);
 
         if (user == null) {
-            user = userService.create(provider, providerId, registerId);
+            user = userService.create(name, provider, providerId);
+            UserProfile userProfile = userProfileService.createUserProfile(email, picture, nickname, user);
         }
-        UserProfile userProfile = userProfileService.createUserProfile(name, email, picture, user);
 
         String response = redisService.setUserTokenToRedis(user);
         return ResponseEntity.ok(response);

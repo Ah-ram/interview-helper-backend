@@ -7,14 +7,14 @@ import road_to_employment.interview_helper.user_profile.service.response.Userinf
 @Getter
 @RequiredArgsConstructor
 public class UserinfoResponseForm {
-    private final String name;
     private final String email;
     private final String picture;
+    private final String nickname
 
     public static UserinfoResponseForm from(UserinfoResponse response) {
         return new UserinfoResponseForm(
-                response.getName(),
                 response.getEmail(),
-                response.getPicture());
+                response.getPicture(),
+                response.getNickname());
     }
 }

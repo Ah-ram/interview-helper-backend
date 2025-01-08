@@ -15,9 +15,8 @@ public class User {
 
     // UserProfile Domain 으로 분리함
     // private String email;
-    // private String name;
+     private String name;
     // private String picture;
-    private String registerId;
 
     @Enumerated(EnumType.STRING)
     private Role role;
