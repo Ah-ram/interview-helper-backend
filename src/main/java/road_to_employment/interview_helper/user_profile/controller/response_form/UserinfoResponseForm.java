@@ -9,7 +9,7 @@ import road_to_employment.interview_helper.user_profile.service.response.Userinf
 public class UserinfoResponseForm {
     private final String email;
     private final String picture;
-    private final String nickname
+    private final String nickname;
 
     public static UserinfoResponseForm from(UserinfoResponse response) {
         return new UserinfoResponseForm(
