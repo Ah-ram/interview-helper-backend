@@ -60,7 +60,7 @@ public class UserProfileController {
         return response;
     }
 
-    @PostMapping("/change-nickname")
+    @PutMapping("/change-nickname")
     public boolean changeUserNickname(@RequestBody ChangeUserNicknameRequestForm changeUserNicknameRequestForm) {
         String userToken = changeUserNicknameRequestForm.getUserToken();
         String nickname = changeUserNicknameRequestForm.getNickname();
