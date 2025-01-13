@@ -30,3 +30,9 @@ spring:
     secret: ${JWT_SECRET_KEY}
     access-token-validity: 3600000
     refresh-token-validity: 604800000
+
+aws:
+  bucket-name: ${BUCKET_NAME}
+  aws-region: ${AWS_REGION}
+  access-key: ${AWS_ACCESS_KEY}
+  secret-key: ${AWS_SECRET_KEY}

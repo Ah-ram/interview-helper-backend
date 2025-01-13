@@ -2,10 +2,7 @@ package road_to_employment.interview_helper.user_profile.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import road_to_employment.interview_helper.oauth.service.RedisService;
 import road_to_employment.interview_helper.user.entity.User;
 import road_to_employment.interview_helper.user.service.UserService;
@@ -33,6 +30,7 @@ public class UserProfileController {
         Long userId = Long.valueOf(value);
         User user = userService.findById(userId);
         UserinfoResponse response = userProfileService.findByUser(user);
+        log.info("controller -> getUserInfo() picture: {}", response.getPicture());
 
         return UserinfoResponseForm.from(response);
     }
@@ -48,20 +46,21 @@ public class UserProfileController {
         return response;
     }
 
-    @PostMapping("/change-picture")
-    public boolean changeUserPicture(@RequestBody ChangeUserPictureRequestForm changeUserPictureRequestForm) {
+    @PutMapping("/change-picture")
+    public String changeUserPicture(@RequestBody ChangeUserPictureRequestForm changeUserPictureRequestForm) {
         String userToken = changeUserPictureRequestForm.getUserToken();
         String imageUrl = changeUserPictureRequestForm.getImageUrl();
+        log.info("controller -> imageUrl: {}", imageUrl);
         String value = redisService.getValueByKey(userToken);
         Long userId = Long.valueOf(value);
         User user = userService.findById(userId);
 
-        boolean response = userProfileService.changeUserPicture(user, imageUrl);
+        String response = userProfileService.changeUserPicture(user, imageUrl);
 
         return response;
     }
 
-    @PostMapping("/change-nickname")
+    @PutMapping("/change-nickname")
     public boolean changeUserNickname(@RequestBody ChangeUserNicknameRequestForm changeUserNicknameRequestForm) {
         String userToken = changeUserNicknameRequestForm.getUserToken();
         String nickname = changeUserNicknameRequestForm.getNickname();
