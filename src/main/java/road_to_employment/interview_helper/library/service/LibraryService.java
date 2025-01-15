@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface LibraryService {
     Library createLibrary(User user);
+    Library findLibraryByUserId(Long userId);
     boolean checkDirectoryNameDuplicate(String name, Library library);
     DirectoryResponse createDirectory(String name, Library library);
     List<DirectoryResponse> listDirectory(Library library);

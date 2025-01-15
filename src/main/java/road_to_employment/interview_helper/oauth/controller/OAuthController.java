@@ -71,6 +71,7 @@ public class OAuthController {
             user = userService.create(name, provider, providerId);
             UserProfile userProfile = userProfileService.createUserProfile(email, picture, nickname, user);
             Library library = libraryService.createLibrary(user);
+
         }
 
         String response = redisService.setUserTokenToRedis(user);

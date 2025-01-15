@@ -1,9 +1,16 @@
 package road_to_employment.interview_helper.directory.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 import road_to_employment.interview_helper.library.entity.Library;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -13,6 +20,7 @@ public class Directory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Setter
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -25,4 +33,12 @@ public class Directory {
     }
 
     public Directory() {}
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
+    @CreationTimestamp
+    private LocalDateTime createDate;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
+    @UpdateTimestamp
+    private LocalDateTime updateDate;
 }
