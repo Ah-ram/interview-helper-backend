@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface DirectoryRepository extends JpaRepository<Directory, Long> {
     boolean existsByLibraryAndName(Library library, String name);
+    List<Directory> findByLibraryIn(Library library);
 }
