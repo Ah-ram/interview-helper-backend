@@ -1,5 +1,5 @@
 server:
-  port: ${PORT}
+  port: ${SPRING_PORT}
 spring:
   application:
     name: interview_helper
