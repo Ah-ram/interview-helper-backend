@@ -2,6 +2,7 @@ package road_to_employment.interview_helper.directory.service;
 
 import road_to_employment.interview_helper.directory.entity.Directory;
 import road_to_employment.interview_helper.directory.repository.DirectoryRepository;
+import road_to_employment.interview_helper.library.entity.Library;
 
 import java.util.List;
 

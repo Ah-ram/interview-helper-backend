@@ -5,4 +5,5 @@ import road_to_employment.interview_helper.user.entity.User;
 
 public interface LibraryService {
     Library createLibrary(User user);
+    Library findLibraryByUserId(Long userId);
 }
