@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import road_to_employment.interview_helper.library.entity.Library;
+import road_to_employment.interview_helper.library.service.LibraryService;
 import road_to_employment.interview_helper.oauth.service.OAuthService;
 import road_to_employment.interview_helper.oauth.service.RedisService;
 import road_to_employment.interview_helper.user.entity.User;
@@ -23,6 +25,7 @@ public class OAuthController {
     private final UserService userService;
     private final UserProfileService userProfileService;
     private final RedisService redisService;
+    private final LibraryService libraryService;
 
     @GetMapping("/google")
     public ResponseEntity<String> googleOauthUri() {
@@ -67,6 +70,7 @@ public class OAuthController {
         if (user == null) {
             user = userService.create(name, provider, providerId);
             UserProfile userProfile = userProfileService.createUserProfile(email, picture, nickname, user);
+            Library library = libraryService.createLibrary(user);
         }
 
         String response = redisService.setUserTokenToRedis(user);
