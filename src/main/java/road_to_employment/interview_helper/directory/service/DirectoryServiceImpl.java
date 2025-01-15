@@ -3,6 +3,7 @@ package road_to_employment.interview_helper.directory.service;
 import road_to_employment.interview_helper.directory.entity.Directory;
 import road_to_employment.interview_helper.directory.repository.DirectoryRepository;
 
+import java.util.List;
 
 
 public class DirectoryServiceImpl implements DirectoryService {
@@ -22,5 +23,10 @@ public class DirectoryServiceImpl implements DirectoryService {
 
         Directory savedDirectory = directoryRepository.save(directory);
         return savedDirectory;
+    }
+
+    @Override
+    public List<Directory> listDirectory(Library library) {
+        return directoryRepository.findByLibraryIn(library);
     }
 }
