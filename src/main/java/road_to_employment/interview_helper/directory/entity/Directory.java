@@ -3,6 +3,7 @@ package road_to_employment.interview_helper.directory.entity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
+import road_to_employment.interview_helper.library.entity.Library;
 
 @Entity
 @Getter
