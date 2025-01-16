@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-@EnableJpaRepositories("road_to_employment.interview_helper.library")
+@EnableJpaRepositories(basePackages = { "road_to_employment.interview_helper.library", "road_to_employment.interview_helper.directory" })
 public class LibraryServiceImpl implements LibraryService {
     private final LibraryRepository libraryRepository;
     private final UserRepository userRepository;
@@ -67,7 +67,7 @@ public class LibraryServiceImpl implements LibraryService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 Id로 사용자를 찾을 수 없습니다!"));
 
-        return libraryRepository.findByUserId(user)
+        return libraryRepository.findByUser(user)
                 .orElseThrow(() -> new IllegalArgumentException("해당 Id로 라이브러리를 찾을 수 없습니다!"));
     }
 }

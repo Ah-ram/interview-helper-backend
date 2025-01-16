@@ -7,5 +7,5 @@ import road_to_employment.interview_helper.user.entity.User;
 import java.util.Optional;
 
 public interface LibraryRepository extends JpaRepository<Library, Long> {
-    Optional<Library> findByUserId(User user);
+    Optional<Library> findByUser(User user);
 }
