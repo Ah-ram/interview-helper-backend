@@ -35,7 +35,7 @@ public class LibraryController {
         String value = redisService.getValueByKey(userToken);
         Long userId = Long.valueOf(value);
         User user = userService.findById(userId);
-        Library library = libraryService;
+        Library library = libraryService.findLibraryByUserId(userId);
 
         boolean response = libraryService.checkDirectoryNameDuplicate(directoryName, library);
 
@@ -49,7 +49,7 @@ public class LibraryController {
         String value = redisService.getValueByKey(userToken);
         Long userId = Long.valueOf(value);
         User user = userService.findById(userId);
-        Library library = libraryService;
+        Library library = libraryService.findLibraryByUserId(userId);
 
         DirectoryResponse response = libraryService.createDirectory(directoryName, library);
 
@@ -62,7 +62,7 @@ public class LibraryController {
         String value = redisService.getValueByKey(userToken);
         Long userId = Long.valueOf(value);
         User user = userService.findById(userId);
-        Library library = libraryService;
+        Library library = libraryService.findLibraryByUserId(userId);
 
         List<DirectoryResponse> response = libraryService.listDirectory(library);
 
