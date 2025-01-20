@@ -2,6 +2,7 @@ package road_to_employment.interview_helper.question.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Service;
 import road_to_employment.interview_helper.directory.entity.Directory;
 import road_to_employment.interview_helper.directory.repository.DirectoryRepository;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@EnableJpaRepositories("road_to_employment.interview_helper.question")
 public class QuestionServiceImpl implements QuestionService {
     private final QuestionRepository questionRepository;
     private final DirectoryRepository directoryRepository;
@@ -29,7 +31,7 @@ public class QuestionServiceImpl implements QuestionService {
         Category category = Category.values()[categoryIndex];
         Directory directory = directoryRepository.findFirstByLibraryOrderById(library);
         List<Question> questionList = titleList.stream().map(
-                title -> new Question.builder()
+                title -> Question.builder()
                         .title(title)
                         .category(category)
                         .directory(directory)
