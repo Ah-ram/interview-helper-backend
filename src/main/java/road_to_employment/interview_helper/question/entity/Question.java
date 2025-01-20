@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import road_to_employment.interview_helper.directory.entity.Directory;
 
+@Entity
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
