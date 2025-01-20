@@ -11,12 +11,14 @@ import java.time.LocalDateTime;
 public class DirectoryResponse {
     private final Long id;
     private final String name;
+    private final LocalDateTime createDate;
     private final LocalDateTime updateDate;
 
     public static DirectoryResponse from(Directory directory) {
         return new DirectoryResponse(
                 directory.getId(),
                 directory.getName(),
+                directory.getCreateDate(),
                 directory.getUpdateDate());
     }
 }
