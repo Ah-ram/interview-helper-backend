@@ -40,8 +40,13 @@ public class LibraryServiceImpl implements LibraryService {
     }
 
     @Override
-    public boolean checkDirectoryNameDuplicate(String name, Library library) {
-        return !directoryRepository.existsByLibraryAndName(library, name);
+    public String checkDirectoryNameDuplicate(String name, Library library) {
+        int count = 1;
+        String changedName = name;
+        while (directoryRepository.existsByLibraryAndName(library, changedName)) {
+            changedName = name + " " + count++;
+        }
+        return changedName;
     }
 
     @Override

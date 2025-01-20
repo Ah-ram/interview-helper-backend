@@ -29,7 +29,7 @@ public class LibraryController {
     private final RedisService redisService;
 
     @PostMapping("/check-directory-name-duplicate")
-    public boolean checkDirectoryNameDuplicate(@RequestBody DirectoryCreateRequestForm directoryCreateRequestForm) {
+    public String checkDirectoryNameDuplicate(@RequestBody DirectoryCreateRequestForm directoryCreateRequestForm) {
         String userToken = directoryCreateRequestForm.getUserToken();
         String directoryName = directoryCreateRequestForm.getName();
         String value = redisService.getValueByKey(userToken);
@@ -37,7 +37,7 @@ public class LibraryController {
         User user = userService.findById(userId);
         Library library = libraryService.findLibraryByUserId(userId);
 
-        boolean response = libraryService.checkDirectoryNameDuplicate(directoryName, library);
+        String response = libraryService.checkDirectoryNameDuplicate(directoryName, library);
 
         return response;
     }
