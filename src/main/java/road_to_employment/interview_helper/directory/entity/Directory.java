@@ -23,6 +23,7 @@ public class Directory {
     private Long id;
 
     @Setter
+    @Column(nullable = false)
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)

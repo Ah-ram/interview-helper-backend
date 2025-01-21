@@ -2,10 +2,7 @@ package road_to_employment.interview_helper.library.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import road_to_employment.interview_helper.common.request_form.UserTokenRequestForm;
 import road_to_employment.interview_helper.library.controller.request_form.DirectoryCreateRequestForm;
 import road_to_employment.interview_helper.library.controller.response_form.DirectoryResponseForm;
@@ -67,5 +64,18 @@ public class LibraryController {
         List<DirectoryResponse> response = libraryService.listDirectory(library);
 
         return response.stream().map(DirectoryResponseForm::from).collect(Collectors.toList());
+    }
+
+    @PutMapping("/change-directory-name/{directoryId}")
+    public String changeDirectoryName(@PathVariable("directoryId") Long directoryId, @RequestBody DirectoryCreateRequestForm directoryCreateRequestForm) {
+        String userToken = directoryCreateRequestForm.getUserToken();
+        String directoryName = directoryCreateRequestForm.getName();
+        String value = redisService.getValueByKey(userToken);
+        Long userId = Long.valueOf(value);
+        User user = userService.findById(userId);
+        Library library = libraryService.findLibraryByUserId(userId);
+        String response = libraryService.changeDirectoryName(directoryId, directoryName, library);
+
+        return response;
     }
 }

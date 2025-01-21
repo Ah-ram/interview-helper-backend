@@ -12,4 +12,5 @@ public interface DirectoryRepository extends JpaRepository<Directory, Long> {
     boolean existsByLibraryAndName(Library library, String name);
     List<Directory> findByLibrary(Library library);
     Directory findFirstByLibraryOrderById(Library library);
+    Optional<Directory> findByLibraryAndName(Library library, String name);
 }

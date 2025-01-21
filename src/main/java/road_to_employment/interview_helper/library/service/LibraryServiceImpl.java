@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import road_to_employment.interview_helper.directory.entity.Directory;
 import road_to_employment.interview_helper.directory.repository.DirectoryRepository;
 import road_to_employment.interview_helper.library.entity.Library;
@@ -74,5 +75,18 @@ public class LibraryServiceImpl implements LibraryService {
 
         return libraryRepository.findByUser(user)
                 .orElseThrow(() -> new IllegalArgumentException("해당 Id로 라이브러리를 찾을 수 없습니다!"));
+    }
+
+    @Override
+    public String changeDirectoryName(Long directoryId, String name, Library library) {
+        Directory directory = directoryRepository.findById(directoryId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 Id로 디렉토리를 찾을 수 없습니다!"));
+        String changedName = name;
+        directoryRepository.existsByLibraryAndName(library, changedName);
+
+        directory.setName(changedName);
+        directoryRepository.save(directory);
+
+        return directory.getName();
     }
 }
