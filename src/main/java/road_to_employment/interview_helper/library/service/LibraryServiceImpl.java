@@ -9,7 +9,12 @@ import road_to_employment.interview_helper.directory.entity.Directory;
 import road_to_employment.interview_helper.directory.repository.DirectoryRepository;
 import road_to_employment.interview_helper.library.entity.Library;
 import road_to_employment.interview_helper.library.repository.LibraryRepository;
+import road_to_employment.interview_helper.library.service.request.QuestionListRequest;
 import road_to_employment.interview_helper.library.service.response.DirectoryResponse;
+import road_to_employment.interview_helper.library.service.response.QuestionListResponse;
+import road_to_employment.interview_helper.question.entity.Category;
+import road_to_employment.interview_helper.question.entity.Question;
+import road_to_employment.interview_helper.question.repository.QuestionRepository;
 import road_to_employment.interview_helper.user.entity.User;
 import road_to_employment.interview_helper.user.repository.UserRepository;
 
@@ -26,6 +31,7 @@ public class LibraryServiceImpl implements LibraryService {
     private final LibraryRepository libraryRepository;
     private final UserRepository userRepository;
     private final DirectoryRepository directoryRepository;
+    private final QuestionRepository questionRepository;
 
     @Override
     public Library createLibrary(User user) {
@@ -88,5 +94,15 @@ public class LibraryServiceImpl implements LibraryService {
         directoryRepository.save(directory);
 
         return directory.getName();
+    }
+
+    public List<QuestionListResponse> listQuestion(Library library, QuestionListRequest questionListRequest) {
+        Directory directory = directoryRepository
+                .findByLibraryAndName(library, questionListRequest.getDirectoryName())
+                .orElseThrow(() -> new IllegalArgumentException("해당 디렉토리가 존재하지 않습니다!"));
+        Category category = Category.values()[questionListRequest.getCategoryIndex()];
+        List<Question> questionList = questionRepository.findByCategoryAndDirectory(category, directory);
+
+        return questionList.stream().map(QuestionListResponse::from).collect(Collectors.toList());
     }
 }

@@ -8,4 +8,5 @@ import road_to_employment.interview_helper.question.entity.Question;
 import java.util.List;
 
 public interface QuestionRepository extends JpaRepository<Question, Long> {
+    List<Question> findByCategoryAndDirectory(Category category, Directory directory);
 }
