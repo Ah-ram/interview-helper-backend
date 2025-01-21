@@ -12,4 +12,5 @@ public interface LibraryService {
     String checkDirectoryNameDuplicate(String name, Library library);
     DirectoryResponse createDirectory(String name, Library library);
     List<DirectoryResponse> listDirectory(Library library);
+    String changeDirectoryName(Long directoryId, String name, Library library);
 }
