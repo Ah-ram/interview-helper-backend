@@ -5,10 +5,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import road_to_employment.interview_helper.common.request_form.UserTokenRequestForm;
 import road_to_employment.interview_helper.library.controller.request_form.DirectoryRequestForm;
+import road_to_employment.interview_helper.library.controller.request_form.QuestionListRequestForm;
 import road_to_employment.interview_helper.library.controller.response_form.DirectoryResponseForm;
+import road_to_employment.interview_helper.library.controller.response_form.QuestionListResponseForm;
 import road_to_employment.interview_helper.library.entity.Library;
 import road_to_employment.interview_helper.library.service.LibraryService;
 import road_to_employment.interview_helper.library.service.response.DirectoryResponse;
+import road_to_employment.interview_helper.library.service.response.QuestionListResponse;
 import road_to_employment.interview_helper.oauth.service.RedisService;
 import road_to_employment.interview_helper.user.entity.User;
 import road_to_employment.interview_helper.user.service.UserService;
@@ -77,6 +80,19 @@ public class LibraryController {
         String response = libraryService.changeDirectoryName(directoryId, directoryName, library);
 
         return response;
+    }
+    
+   @PostMapping("/list-question")
+    public List<QuestionListResponseForm> listQuestion(@RequestBody QuestionListRequestForm questionListRequestForm) {
+        String userToken = questionListRequestForm.getUserToken();
+        String value = redisService.getValueByKey(userToken);
+        Long userId = Long.valueOf(value);
+        Library library = libraryService.findLibraryByUserId(userId);
+
+        List<QuestionListResponse> response = libraryService.listQuestion(
+                library, questionListRequestForm.toQuestionListRequest());
+
+        return response.stream().map(QuestionListResponseForm::from).collect(Collectors.toList());
     }
 
     @DeleteMapping("/delete-directory/{directoryId}")
