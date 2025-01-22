@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import road_to_employment.interview_helper.common.request_form.UserTokenRequestForm;
-import road_to_employment.interview_helper.library.controller.request_form.DirectoryCreateRequestForm;
+import road_to_employment.interview_helper.library.controller.request_form.DirectoryRequestForm;
 import road_to_employment.interview_helper.library.controller.response_form.DirectoryResponseForm;
 import road_to_employment.interview_helper.library.entity.Library;
 import road_to_employment.interview_helper.library.service.LibraryService;
@@ -26,9 +26,9 @@ public class LibraryController {
     private final RedisService redisService;
 
     @PostMapping("/check-directory-name-duplicate")
-    public String checkDirectoryNameDuplicate(@RequestBody DirectoryCreateRequestForm directoryCreateRequestForm) {
-        String userToken = directoryCreateRequestForm.getUserToken();
-        String directoryName = directoryCreateRequestForm.getName();
+    public String checkDirectoryNameDuplicate(@RequestBody DirectoryRequestForm directoryRequestForm) {
+        String userToken = directoryRequestForm.getUserToken();
+        String directoryName = directoryRequestForm.getName();
         String value = redisService.getValueByKey(userToken);
         Long userId = Long.valueOf(value);
         User user = userService.findById(userId);
@@ -40,9 +40,9 @@ public class LibraryController {
     }
 
     @PostMapping("/create-directory")
-    public DirectoryResponseForm createDirectory(@RequestBody DirectoryCreateRequestForm directoryCreateRequestForm) {
-        String userToken = directoryCreateRequestForm.getUserToken();
-        String directoryName = directoryCreateRequestForm.getName();
+    public DirectoryResponseForm createDirectory(@RequestBody DirectoryRequestForm directoryRequestForm) {
+        String userToken = directoryRequestForm.getUserToken();
+        String directoryName = directoryRequestForm.getName();
         String value = redisService.getValueByKey(userToken);
         Long userId = Long.valueOf(value);
         User user = userService.findById(userId);
@@ -67,9 +67,9 @@ public class LibraryController {
     }
 
     @PutMapping("/change-directory-name/{directoryId}")
-    public String changeDirectoryName(@PathVariable("directoryId") Long directoryId, @RequestBody DirectoryCreateRequestForm directoryCreateRequestForm) {
-        String userToken = directoryCreateRequestForm.getUserToken();
-        String directoryName = directoryCreateRequestForm.getName();
+    public String changeDirectoryName(@PathVariable("directoryId") Long directoryId, @RequestBody DirectoryRequestForm directoryRequestForm) {
+        String userToken = directoryRequestForm.getUserToken();
+        String directoryName = directoryRequestForm.getName();
         String value = redisService.getValueByKey(userToken);
         Long userId = Long.valueOf(value);
         User user = userService.findById(userId);
@@ -77,5 +77,22 @@ public class LibraryController {
         String response = libraryService.changeDirectoryName(directoryId, directoryName, library);
 
         return response;
+    }
+
+    @DeleteMapping("/delete-directory/{directoryId}")
+    public Boolean deleteDirectory(@PathVariable("directoryId") Long directoryId, @RequestBody UserTokenRequestForm userTokenRequestForm) {
+        String userToken = userTokenRequestForm.getUserToken();
+        String value = redisService.getValueByKey(userToken);
+        Long userId = Long.valueOf(value);
+        User user = userService.findById(userId);
+        Library library = libraryService.findLibraryByUserId(userId);
+
+        Boolean isDeleted = libraryService.deleteDirectory(directoryId, library);
+
+        if (!isDeleted) {
+            throw new RuntimeException("디렉토리가 존재하지 않거나 이미 삭제되었습니다.");
+        }
+
+        return true;
     }
 }

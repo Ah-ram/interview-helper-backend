@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class DirectoryCreateRequestForm {
+public class DirectoryRequestForm {
     private final String userToken;
     private final String name;
 }

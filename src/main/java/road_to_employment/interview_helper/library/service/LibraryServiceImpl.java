@@ -89,4 +89,16 @@ public class LibraryServiceImpl implements LibraryService {
 
         return directory.getName();
     }
+
+    @Override
+    public Boolean deleteDirectory(Long directoryId, Library library) {
+        Optional<Directory> maybeDirectory = directoryRepository.findById(directoryId);
+        if (maybeDirectory.isEmpty()) {
+            return false;
+        }
+
+        directoryRepository.deleteById(directoryId);
+
+        return !directoryRepository.existsById(directoryId);
+    }
 }

@@ -13,4 +13,5 @@ public interface LibraryService {
     DirectoryResponse createDirectory(String name, Library library);
     List<DirectoryResponse> listDirectory(Library library);
     String changeDirectoryName(Long directoryId, String name, Library library);
+    Boolean deleteDirectory(Long directoryId, Library library);
 }

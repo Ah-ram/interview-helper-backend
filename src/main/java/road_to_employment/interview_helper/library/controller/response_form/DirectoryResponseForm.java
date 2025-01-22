@@ -3,7 +3,6 @@ package road_to_employment.interview_helper.library.controller.response_form;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import road_to_employment.interview_helper.library.controller.request_form.DirectoryCreateRequestForm;
 import road_to_employment.interview_helper.library.service.response.DirectoryResponse;
 
 import java.time.LocalDateTime;
