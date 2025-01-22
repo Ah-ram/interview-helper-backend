@@ -95,7 +95,8 @@ public class LibraryServiceImpl implements LibraryService {
 
         return directory.getName();
     }
-
+    
+    @Override
     public List<QuestionListResponse> listQuestion(Library library, QuestionListRequest questionListRequest) {
         Directory directory = directoryRepository
                 .findByLibraryAndName(library, questionListRequest.getDirectoryName())
@@ -104,5 +105,17 @@ public class LibraryServiceImpl implements LibraryService {
         List<Question> questionList = questionRepository.findByCategoryAndDirectory(category, directory);
 
         return questionList.stream().map(QuestionListResponse::from).collect(Collectors.toList());
+    }
+  
+    @Override
+    public Boolean deleteDirectory(Long directoryId, Library library) {
+        Optional<Directory> maybeDirectory = directoryRepository.findById(directoryId);
+        if (maybeDirectory.isEmpty()) {
+            return false;
+        }
+
+        directoryRepository.deleteById(directoryId);
+
+        return !directoryRepository.existsById(directoryId);
     }
 }
