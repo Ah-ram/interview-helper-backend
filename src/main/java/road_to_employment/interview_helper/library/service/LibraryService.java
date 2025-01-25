@@ -1,6 +1,7 @@
 package road_to_employment.interview_helper.library.service;
 
 import road_to_employment.interview_helper.library.entity.Library;
+import road_to_employment.interview_helper.library.service.request.MoveQuestionRequest;
 import road_to_employment.interview_helper.library.service.request.QuestionListRequest;
 import road_to_employment.interview_helper.library.service.response.DirectoryResponse;
 import road_to_employment.interview_helper.library.service.response.QuestionListResponse;
@@ -17,4 +18,5 @@ public interface LibraryService {
     String changeDirectoryName(Long directoryId, String name, Library library);
     List<QuestionListResponse> listQuestion(Library library, QuestionListRequest questionListRequest);
     Boolean deleteDirectory(Long directoryId, Library library);
+    Boolean moveQuestion(Library library, Long directoryId, MoveQuestionRequest moveQuestionRequest);
 }

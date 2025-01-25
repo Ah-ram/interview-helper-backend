@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import road_to_employment.interview_helper.common.request_form.UserTokenRequestForm;
 import road_to_employment.interview_helper.library.controller.request_form.DirectoryRequestForm;
+import road_to_employment.interview_helper.library.controller.request_form.MoveQuestionRequestForm;
 import road_to_employment.interview_helper.library.controller.request_form.QuestionListRequestForm;
 import road_to_employment.interview_helper.library.controller.response_form.DirectoryResponseForm;
 import road_to_employment.interview_helper.library.controller.response_form.QuestionListResponseForm;
@@ -110,5 +111,20 @@ public class LibraryController {
         }
 
         return true;
+    }
+
+    @PutMapping("/move-question/{directoryId}")
+    public Boolean moveQuestion(@PathVariable("directoryId") Long directoryId, @RequestBody MoveQuestionRequestForm moveQuestionRequestForm) {
+        String userToken = moveQuestionRequestForm.getUserToken();
+        log.info("moveQuestion() userToken: {}", userToken);
+        log.info("moveQuestion() directoryId: {}", directoryId);
+        log.info("moveQuestion() moveQuestionRequestForm questionId: {}", moveQuestionRequestForm.getQuestionId());
+        String value = redisService.getValueByKey(userToken);
+        Long userId = Long.valueOf(value);
+        Library library = libraryService.findLibraryByUserId(userId);
+
+        Boolean isMoved = libraryService.moveQuestion(library, directoryId, moveQuestionRequestForm.toMoveQuestionRequest());
+
+        return isMoved;
     }
 }

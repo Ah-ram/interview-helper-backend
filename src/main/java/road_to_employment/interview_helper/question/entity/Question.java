@@ -21,6 +21,7 @@ public class Question {
     @Column(nullable = false)
     private Category category;
 
+    @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "directory_id", referencedColumnName = "id", nullable = false)
     private Directory directory;
