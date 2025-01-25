@@ -9,6 +9,7 @@ import road_to_employment.interview_helper.directory.entity.Directory;
 import road_to_employment.interview_helper.directory.repository.DirectoryRepository;
 import road_to_employment.interview_helper.library.entity.Library;
 import road_to_employment.interview_helper.library.repository.LibraryRepository;
+import road_to_employment.interview_helper.library.service.request.MoveQuestionRequest;
 import road_to_employment.interview_helper.library.service.request.QuestionListRequest;
 import road_to_employment.interview_helper.library.service.response.DirectoryResponse;
 import road_to_employment.interview_helper.library.service.response.QuestionListResponse;
@@ -117,5 +118,18 @@ public class LibraryServiceImpl implements LibraryService {
         directoryRepository.deleteById(directoryId);
 
         return !directoryRepository.existsById(directoryId);
+    }
+
+    @Override
+    public Boolean moveQuestion(Library library, Long directoryId, MoveQuestionRequest moveQuestionRequest) {
+        Directory directory = directoryRepository.findById(directoryId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 Id로 디렉토리를 찾을 수 없습니다!"));
+        Question question = questionRepository.findById(moveQuestionRequest.getQuestionId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 Id로 질문을 찾을 수 없습니다!"));
+
+        question.setDirectory(directory);
+        questionRepository.save(question);
+
+        return true;
     }
 }
