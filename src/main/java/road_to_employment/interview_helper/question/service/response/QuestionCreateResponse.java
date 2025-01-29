@@ -9,11 +9,13 @@ import java.util.List;
 @Getter
 @RequiredArgsConstructor
 public class QuestionCreateResponse {
+    private final Long questionId;
     private final String title;
     private final String category;
 
     public static QuestionCreateResponse from(Question question) {
         return new QuestionCreateResponse(
+                question.getId(),
                 question.getTitle(),
                 question.getCategory().getValue());
     }
