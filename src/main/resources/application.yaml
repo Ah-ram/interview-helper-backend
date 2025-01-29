@@ -32,3 +32,6 @@ aws:
   aws-region: ${AWS_REGION}
   access-key: ${AWS_ACCESS_KEY}
   secret-key: ${AWS_SECRET_KEY}
+
+ai-request:
+  uri: ${AI_REQUEST_URI}
